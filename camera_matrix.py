@@ -7,7 +7,7 @@ ONESTEP = 0.5
 class Camera():
     def __init__(self):
         self.zoom_now = 5
-        self.poz = np.array([0.0, 3.5, -10.0])
+        self.poz = np.array([0.0, 3.0, -11.0])
         self.C = np.array([ [1, 0, 0],
                             [0, 1, 0],
                             [0, 0, 1.0]])

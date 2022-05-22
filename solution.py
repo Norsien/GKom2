@@ -1,5 +1,4 @@
 import numpy as np
-from math import cos, sin, pi
 import tkinter as tk
 import objects as ob
 import camera_matrix
@@ -9,6 +8,7 @@ import edge
 
 # calc
 RESIZE = 300
+RESIZEY = 180
 eps = 0.00000001
 
 # get objects
@@ -16,9 +16,10 @@ objects = ob.getObjects()
 
 def calcPolygons():
     polygons = []
-    p_id = 1
+    p_id = 0
     for o in objects:
         Vertices, Edges, Walls, colors = o
+
         points = []
         for point in Vertices:
             f = c.matrix()*(point-c.position()).T
@@ -27,11 +28,8 @@ def calcPolygons():
 
         for w in Walls:
             newColor = colors[p_id%6]
+
             lines = []
-            p1 = points[Edges[w[0]][0]]
-            p2 = points[Edges[w[0]][1]]
-            p3 = points[Edges[w[2]][0]]
-            plane = line.plane(p1, p2, p3)
             for e in w:
                 s = points[Edges[e][0]].copy()
                 t = points[Edges[e][1]].copy()
@@ -42,9 +40,12 @@ def calcPolygons():
             p = polygon.Polygon(lines, newColor)
             p_id += 1
             if p.is_visible(1, 1, -1, -1):
+                p1 = points[Edges[w[0]][0]]
+                p2 = points[Edges[w[0]][1]]
+                p3 = points[Edges[w[2]][0]]
+                p.calc_plane(p1, p2, p3)
                 p.id = p_id
-                p.plane = plane
-                p.apoint = p1
+                p.calc_point(p1)
                 polygons.append(p)
 
     edges = []
@@ -85,16 +86,10 @@ def calcPolygons():
                             top_layer = ed
                             leftZ = top_layer.depth(currentX, currentY)
                             rightZ = top_layer.depth(e.x, currentY)
-                        # elif not (lZ >= leftZ  and rZ >= rightZ ):
-                        #     print ("Nie fajnie")
-                        #     print(lZ, leftZ, rZ, rightZ)
                     color = top_layer.color
 
-                    l = screen.create_line(currentX*RESIZE+RESIZE, RESIZE-currentY*RESIZE, \
-                        e.x*RESIZE + RESIZE, RESIZE-currentY*RESIZE, fill=color)
-
-                # for h in current_walls:
-                #     h.printplane()
+                    l = screen.create_line(currentX*RESIZE+RESIZE, RESIZEY-currentY*RESIZE, \
+                        e.x*RESIZE + RESIZE, RESIZEY-currentY*RESIZE, fill=color)
 
                 currentX = e.x
             if (e.polygon.active):
@@ -187,12 +182,12 @@ def ground():
 root = tk.Tk()
 root.title("Virtual Camera")
 root.geometry("1024x800")
-root.minsize(max(295, 2*RESIZE), 168+2*RESIZE)
+root.minsize(max(295, 2*RESIZE), 168+2*RESIZEY)
 bottompanel=tk.Frame(root, background="#83eeff", height=14)
 bottompanel.pack(side="bottom", fill="x")
 mainpanel=tk.Frame(root,  background="#222222")
 mainpanel.pack(anchor='center', fill="both", expand=True)
-screen = tk.Canvas(mainpanel, height=2*RESIZE, width=2*RESIZE)
+screen = tk.Canvas(mainpanel, height=2*RESIZEY, width=2*RESIZE)
 screen.pack(anchor='center',fill="none", expand=True)
 positionsField = tk.Text(mainpanel, height = 1, width = 33)
 positionsField.insert("1.0", "x= a, y= b, z= c")

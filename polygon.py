@@ -1,4 +1,3 @@
-import line
 import edge
 import numpy as np
 
@@ -24,7 +23,6 @@ class Polygon():
                 if (l.a[1] != l.b[1]):
                     e = edge.Edge(l.a, l.b, self)
                     edges.append(e)
-        self.lines = lines
         self.edges = edges
 
     def is_visible(self, top, right, bottom, left):
@@ -33,30 +31,21 @@ class Polygon():
             return False
         return True
 
-    def is_inside(self, top, right, bottom, left):
-        if self.right > right or self.left < left \
-            or self.top > top or self.bottom < bottom:
-            return False
-        return True
-
-    # def printplane(self):
-    #    print(  "z = " + str(self.leftone.z) + \
-    #           " zzlope = " + str(self.zzlope) )
-
-    def printplane(self):
-        print(str(self.plane[0]) + "x + " + \
-                str(self.plane[1]) + "y + " + \
-                str(self.plane[2]) + "z")
-
     def depth(self, x, y):
-        planeNormal = np.array([self.plane[0], self.plane[1], self.plane[2]])
         planePoint = np.array([self.apoint[0], self.apoint[1], self.apoint[2]])
         lineVector = np.array([x, y, 1])
         linePoint = np.array([0, 0, 0])
-        dottta = planeNormal.dot(lineVector)
+        dottta = self.plane.dot(lineVector)
         w = linePoint - planePoint
-        si = -planeNormal.dot(w) / dottta
+        si = -self.plane.dot(w) / dottta
         po = w + si * lineVector + planePoint
         return po[2]
 
+    def calc_plane(self, a, b, c):
+        v1 = np.array([c[0]-a[0], c[1]-a[1], c[2]-a[2]])
+        v2 = np.array([b[0]-a[0], b[1]-a[1], b[2]-a[2]])
+        self.plane = np.cross(v1, v2)
+
+    def calc_point(self, p):
+        self.apoint =  np.array([p[0], p[1], p[2]])
     
