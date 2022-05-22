@@ -40,7 +40,7 @@ def getObjects():
 
     colors = ["#7DCEA0", "#16A085", "#8E44AD", "#EC7063", "#F39C12", "#145A32"]
     objects = []
-    objects.append((ARoad, VRoad, WRoad, colors))
+    #objects.append((ARoad, VRoad, WRoad, colors))
     #objects.append((ARoad2, VRoad2, WRoad2,"colors"))
     objects.append((A1, V1, W1, colors))
     objects.append((A2, V2, W2, colors))

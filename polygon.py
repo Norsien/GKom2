@@ -1,5 +1,6 @@
 import edge
 import numpy as np
+from math import sqrt
 
 class Polygon():
     def __init__(self, lines, color):
@@ -25,10 +26,11 @@ class Polygon():
                     edges.append(e)
         self.edges = edges
 
-    def is_visible(self, top, right, bottom, left):
+    def is_visible(self, top, right, bottom, left, close):
         if self.right < left or self.left > right \
             or self.top < bottom or self.bottom > top:
             return False
+
         return True
 
     def depth(self, x, y):
@@ -41,11 +43,16 @@ class Polygon():
         po = w + si * lineVector + planePoint
         return po[2]
 
+
     def calc_plane(self, a, b, c):
         v1 = np.array([c[0]-a[0], c[1]-a[1], c[2]-a[2]])
         v2 = np.array([b[0]-a[0], b[1]-a[1], b[2]-a[2]])
         self.plane = np.cross(v1, v2)
+        self.d = np.dot(self.plane, self.apoint)
 
     def calc_point(self, p):
         self.apoint =  np.array([p[0], p[1], p[2]])
-    
+
+    def distance(self):
+        dis = self.d/sqrt(self.plane[0]**2 + self.plane[1]**2 + self.plane[2]**2)
+        return dis

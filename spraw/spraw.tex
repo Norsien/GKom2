@@ -44,7 +44,18 @@ Podobnie jak w poprzednim zadaniu kamerę można przesuwać,
 obracać i zmieniać jej zakres widzenia (zoom).
 
 \section{Rysowanie}
-Obliczane są pozycje wierzchołków względem kamery
+Obliczane są pozycje wierzchołków względem kamery. Wyznaczane są 
+krawędzie i ich widoczność. Przypisywane są do wielokątów. 
+Wszyskite krawędzie zapisane są na liście i są posortowane po 
+najmniejszym Y. W pętli powtarzamy dla rosnącego Y rysowanie 
+kkolejnych linii. Dodajemy nowe krawędzie do listy obecnych 
+krawędzi i usuwamy te, które nie występują w danej linii. 
+Sortujemy listę obecnych krawędzi po X. Przechodzimy po koleji 
+po krawędziach. Każda krawędź aktywuje lub dezaktywuje wielokąt 
+do którego należy. Jeżeli obecnie sprawdzana krawędź ma większy 
+x niż poprzednia, to rysujemy pomiędzy tymi wartościami x poziomą 
+linię kolorem wielokąta najbliżej kamery. Rozważany jest tylko 
+wariant, że wielokąty nie mogą się przecinać.
 
 \section{Dodatkowe uwagi}
 Program nie działa gdy wielokąty się przecinają, ale możliwa by 

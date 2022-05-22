@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1653253262 "d:/Studia/sem6/grafika/hidden/spraw/spraw.tex" "spraw.pdf" "spraw" 1653253263
+["pdflatex"] 1653259947 "d:/Studia/sem6/grafika/hidden/spraw/spraw.tex" "spraw.pdf" "spraw" 1653259947
   "C:/Users/Smolams/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1651092200 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/Smolams/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1440.pk" 1615659038 40136 1761f00ba31208acb2cd5d961b071f22 ""
   "C:/Users/Smolams/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1095.pk" 1615659037 26228 b4eb5907126fce775421f333e3f7260c ""
@@ -45,9 +45,9 @@
   "C:/Users/Smolams/AppData/Local/Programs/MiKTeX/tex/latex/graphics/trig.sty" 1636828063 4009 187ea2dc3194cd5a76cd99a8d7a6c4d0 ""
   "C:/Users/Smolams/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1634577016 29971 6c47712bf4bc87d15b2ca318615f75a3 ""
   "C:/Users/Smolams/AppData/Local/Programs/MiKTeX/tex/latex/polski/polski.sty" 1630159173 13344 a993928ba746ec4e012bfd315bcc48d8 ""
-  "d:/Studia/sem6/grafika/hidden/spraw/spraw.tex" 1653253261 2032 9f5e27a3e5cadfc279ccc3ed8243dcd0 ""
-  "spraw.aux" 1653253262 535 caa8dff26c96b4eb94590c38b2b88ecd "pdflatex"
-  "spraw.tex" 1653253261 2032 9f5e27a3e5cadfc279ccc3ed8243dcd0 ""
+  "d:/Studia/sem6/grafika/hidden/spraw/spraw.tex" 1653259946 2779 3d44cf342c4e292e4f24806fdc45eecc ""
+  "spraw.aux" 1653259947 535 caa8dff26c96b4eb94590c38b2b88ecd "pdflatex"
+  "spraw.tex" 1653259946 2779 3d44cf342c4e292e4f24806fdc45eecc ""
   (generated)
   "spraw.aux"
   "spraw.log"

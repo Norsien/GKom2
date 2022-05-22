@@ -39,13 +39,13 @@ def calcPolygons():
                     lines.append(l)
             p = polygon.Polygon(lines, newColor)
             p_id += 1
-            if p.is_visible(1, 1, -1, -1):
-                p1 = points[Edges[w[0]][0]]
-                p2 = points[Edges[w[0]][1]]
-                p3 = points[Edges[w[2]][0]]
-                p.calc_plane(p1, p2, p3)
-                p.id = p_id
-                p.calc_point(p1)
+            p1 = points[Edges[w[0]][0]]
+            p2 = points[Edges[w[0]][1]]
+            p3 = points[Edges[w[2]][0]]
+            p.id = p_id
+            p.calc_point(p1)
+            p.calc_plane(p1, p2, p3)
+            if p.is_visible(1, 1, -1, -1, 1):
                 polygons.append(p)
 
     edges = []
@@ -61,7 +61,7 @@ def calcPolygons():
     w = 0
     for q in range (0, 2*RESIZE):
         for p in polygons:
-            e.polygon.active = False
+            p.active = False
         while (w < len(edges) and edges[w].Ymin <= currentY):
             current_edges.append(edges[w])
             w += 1
@@ -93,6 +93,8 @@ def calcPolygons():
 
                 currentX = e.x
             if (e.polygon.active):
+                if current_walls.count(e.polygon) == 0:
+                    print("ssssss")
                 e.polygon.active = False
                 current_walls.remove(e.polygon)
             else:
