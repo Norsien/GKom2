@@ -105,14 +105,6 @@ def calcPolygons():
                 current_walls.append(e.polygon)
 
         currentY += Ygain
-    
-    # for p in polygons:
-    #     for l in p.lines:   
-    #         if l.visible:
-    #             sX, sY, tX, tY = l.a[0], l.a[1], l.b[0], l.b[1]
-    #             #print(sX, sY, tX, tY)
-    #             l = screen.create_line(sX*RESIZE+RESIZE, RESIZE-sY*RESIZE, \
-    #                 tX*RESIZE + RESIZE, RESIZE-tY*RESIZE, fill="black")
         
 def updatePos():
     positionsField.configure(state="normal")

@@ -20,7 +20,6 @@ class Polygon():
         
         edges = []
         for l in lines:
-            l.cut(1, 1, -1, -1)
             if l.visible:
                 if (l.a[1] != l.b[1]):
                     e = edge.Edge(l.a, l.b, self)

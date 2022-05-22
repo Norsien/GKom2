@@ -15,137 +15,42 @@
 \raggedbottom                           
 
 \title{Grafika komputerowa \\
-{Zadanie 1}}
-\author{Smoliński Mateusz}
-\date{kwiecień 2022}
+{Zadanie 2}}
+\author{Nowak Piotr, Smoliński Mateusz}
+\date{maj 2022}
 
 \begin{document}
 \maketitle
 
 \section{Realizacja zadania}
-Zadanie zostało zrealizowane w środowisku python. Końce krawędzi 
-są punktami o współrzędnych określonch wzgędem początku układu 
+Zadanie zostało zrealizowane w środowisku python. Rozwiązanie 
+jest oparte na programie napisanym do poprzedniego zadania. 
+Zastosowany został algorytm skaningowy. Wierzchołki wielokątów
+są punktami o współrzędnych określonch względem początku układu 
 sceny. Obliczana jest ich pozycja względem kamery, następnie są 
-one rzutowane na płaszczyzne i rysowane są odcinki miedzy 
-uzyskanymi pozycjami. 
+one rzutowane na płaszczyznę i określane są krawędzie wielokątów. 
+Program rysyje obraz poziomymi liniamii, od dołu. Kiedy przechodzi
+przez krawędź sprawdza aktywne wielokąty i rysuje kolorem tego, 
+który jest najblizej kamery.
 
 \section{Obiekty}
-Obiekty reprezentowane są za pomocą wierzchołków zdefiniowanych jako 
-wektor współrzędnych [x, y, z] i krawędzi zdefiniowanych jako pary
-tych wierchołków (a, b). Różne obiekty są reprezentowane na ekranie 
-za pomocą różnego koloru odcinków.
+Obiekty reprezentowane są za pomocą ścian, które są listami 
+krawędzi. Krawędzie to pary wierzchołków, które mają usaloną 
+pozycję wzgędem początku sceny. Każda ściana ma swój ustalony 
+kolor, którym będzie rysowana.
 
 \section{Zmienne kamery}
-Podczas działania programu kamerę można przesuwać, obracać i zmieniać 
-zakres widzenia (zoom).
+Podobnie jak w poprzednim zadaniu kamerę można przesuwać, 
+obracać i zmieniać jej zakres widzenia (zoom).
 
-\subsection{Pozycja kamery}
-Pozycja kamery reprezentowania jest jako wektor \(P\), podobnie jak 
-wierzchołek.
-\[
-    P=
-    \begin{bmatrix}
-        c_x & c_y & c_z
-    \end{bmatrix}    
-\]
-Możliwe jest przesunięcie pozycji kamery o 
-ustaloną odległość wzdłóż jednej osi, obróbonych względem 
-obecnej pozycji kamery. Aby przesunąć kamerę względem początku 
-układu, w spossób taki, że względem kamery jest to przesunięcie 
-w ustalonym kierunku należy rozwiązać równanie:
-\[
-    R \cdot X = 
-    \begin{bmatrix}
-        mv_x \\ mv_y \\ mv_z
-    \end{bmatrix} 
-\]
-Gdzie \(R\) to macierz obrotu kamery, a \(mv\) to transponowany 
-wektor przesunięcia, które chcemy otrzymać. Rozwiązując równanie
-otrzymujemy \(X\), które dodajemy do \(P\).
-\[
-    X = R^{-1} \cdot
-    \begin{bmatrix}
-        mv_x \\ mv_y \\ mv_z
-    \end{bmatrix}
-    \quad
-    P_{nowe} = P_{stare} + X^T
-\]
-\subsection{Obrót kamery}
-Obrót kamery reprezentowany jest za pomocą macierzy \(R\), która 
-zdefiniowana jest w następujący sposób:
-\[
-    R = 
-    \begin{bmatrix}
-        1 & 0 & 0 \\
-        0 & cos(\alpha) & sin(\alpha) \\
-        0 & -sin(\alpha) & cos(\alpha) 
-    \end{bmatrix}\cdot
-    \begin{bmatrix}
-        cos(\beta) & 0 & -sin(\beta) \\
-        0 & 1 & 0 \\
-        sin(\beta) & 0 & cos(\beta) 
-    \end{bmatrix}\cdot
-    \begin{bmatrix}
-        cos(\gamma) & sin(\gamma) & 0 \\
-        -sin(\gamma) & cos(\gamma) & 0 \\
-        0 & 0 & 1 
-    \end{bmatrix}
-\]
-Gdzie \(\alpha\) jest obrotem wokół osi \(x\), 
-\(\beta\) wokół osi \(y\) i \(\gamma\) wokół osi \(z\). Dzięki 
-czemu dla zerowych wartości otrzymujemy początkową macierz:
-\[
-    R = 
-    \begin{bmatrix}
-        1 & 0 & 0 \\
-        0 & 1 & 0 \\
-        0 & 0 & 1 
-    \end{bmatrix}
-\]
-Aby wykonać obrót względem obecnego obrotu zmieniamy \(R\) według 
-sposobu:
-\[
-    R_{nowe} = R_{oborotu} \cdot R_{stare}
-\]
-Gdzie \(R_{oborotu}\) jest jedną z trzech macierzy użytych do 
-wyznaczania \(R\) z usatlonym kątem obrotu.
-\subsection{Zoom}
-Zoom zmieniamy podmieniając osatią wartość z macierzy \(C\).
-W prgramie moze tam wystąpić tylko wartość z listy.
-\[
-    C = 
-    \begin{bmatrix}
-        1 & 0 & 0 \\
-        0 & 1 & 0 \\
-        0 & 0 & zoom 
-    \end{bmatrix}
-\]
-\section{Rzutowanie}
-Punkty rzutujemy otrzymmując najpierw ich pozycję względem 
-kamery, a nastepnie rzutując na płaszczyznę. Dla wierzchołów 
-znajdujących się za kamerą zostały dodane specjalne warunki.
-\[
-    f = C \cdot R \cdot (P - A)^T
-\]
-gdzie A to wektor wspórzędnych wierchołka. Wtedy jeżeli \(f_z > 
-\epsilon\) punkt rzutujemy i zapisujemy otrzymane współrzędne.
-W przeciwym wypadku zostawiamy punkt tak jak jest i zaznaczamy 
-że znajduje się za kamerą.
 \section{Rysowanie}
-Obiekty rysujemy biorąc po koleji każdą kolejną krawędź i 
-sprawdzając gdzie znajdują się rzuty końców tych krawędzi.
-Jeżeli oba są z przodu, to rysujemy obcinek między rzutami. 
-Jeżeli oba są z tyłu, to znaczy że cała krawędź jest za kamerą 
-i nie jest rysowane nic. W przypadku gdy jeden koniec występuje 
-przed, a drugi za kamerą wyznaczamy odcinek między nimi w przestrzeni 
-trójwymiarowej i przesuwamy wiechołek znajdujący się z tyłu o wektor 
-bedący fragmentem tego odcinka, taki że będzie on przed kamerą i 
-rzutujemy nowo otrzymany wierzchołek. Rysujemy obcinek między parą 
-wierzchołków teraz, gdy oba są przed kamerą.
+Obliczane są pozycje wierzchołków względem kamery
 
 \section{Dodatkowe uwagi}
+Program nie działa gdy wielokąty się przecinają, ale możliwa by 
+była odpowiednia modyfikacja.
 Przesunięcie obrazu kamery, tak żeby był wycentrowany zostało 
 wykonane na poziomie modułu rysującego. \\
 \(\epsilon\) to wartość poniżej której obiekty traktujemy jako 
-występujące za kamerą. Wynosi 0.000001.
+występujące za kamerą. Wynosi 0.000001. 
 \end{document}
